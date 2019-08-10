@@ -1,10 +1,10 @@
 const qr = require('qr-image')
 
 const generate = async request => {
-  const { text } = await request.json()
-  const headers = { 'Content-Type': 'image/png' }
-  const qr_png = qr.imageSync(text || 'https://workers.dev')
-  return new Response(qr_png, { headers })
+    const { text } = await request.json()
+    const headers = { 'Content-Type': 'image/png' }
+    const qr_png = qr.imageSync(text || 'https://workers.dev')
+    return new Response(qr_png, { headers })
 }
 
 const landing = `
@@ -25,17 +25,17 @@ const landing = `
 `
 
 async function handleRequest(request) {
-  let response
-  if (request.method === 'POST') {
-    response = await generate(request)
-  } else {
-    response = new Response(landing, {
-      headers: { 'Content-Type': 'text/html' },
-    })
-  }
-  return response
+    let response
+    if (request.method === 'POST') {
+        response = await generate(request)
+    } else {
+        response = new Response(landing, {
+            headers: { 'Content-Type': 'text/html' },
+        })
+    }
+    return response
 }
 
 addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request))
+    event.respondWith(handleRequest(event.request))
 })
